@@ -10,3 +10,5 @@ export class AppController {
     return this.appService.getHello();
   }
 }
+
+//Digite o comando npm run start:dev, para compilar e executar o projeto blogpessoal.
