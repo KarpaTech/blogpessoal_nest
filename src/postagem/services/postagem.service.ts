@@ -2,13 +2,15 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'; //Import
 import { InjectRepository } from '@nestjs/typeorm'; //Importamos o pacote TypeORM com os respectivos decoradores, utilizados na implementação da classe PostagemService
 import { DeleteResult, ILike, Repository } from 'typeorm'; // Importamos a classe Repository do módulo typeorm.A classe Repository no TypeORM implementa o Repository Pattern (Padrão de Repositório), que é um padrão arquitetural amplamente utilizado no desenvolvimento de aplicativos escaláveis e de fácil manutenção. Este padrão tem como objetivo separar a lógica de negócios da lógica de acesso a dados, fornecendo uma camada intermediária entre o banco de dados e o restante da aplicação. O Repository Pattern é um padrão de design de software que facilita a abstração da persistência de dados. Ele atua como uma coleção de objetos em memória, oferecendo métodos de acesso a dados (como find, save, update, delete), sem que a aplicação precise se preocupar com os detalhes específicos da implementação da base de dados, como as consultas SQL ou a configuração de conexões.
 import { Postagem } from '../entities/postagem.entity'; // Importamos a classe entidade Postagem, do módulo Postagem.
+import { TemaService } from './tema.service';
 
 @Injectable() //O decorador @Injectable indica que a classe é um serviço, ou seja, uma classe que pode ser injetada em outras classes por meio da Injeção de Dependências. Injeção de dependência é um padrão de design que visa reduzir o acoplamento entre as classes em um sistema. Em vez de uma classe depender diretamente de outra classe concreta (ou seja, de uma implementação específica), a injeção de dependência permite que as classes dependam de abstrações (interfaces ou classes abstratas), tornando o código mais flexível, modular e de fácil manutenção|Esse padrão permite que as dependências de uma classe (ou seja, os objetos de que ela precisa para funcionar) sejam fornecidas externamente, geralmente por um container de injeção de dependência ou framework, ao invés de serem criadas diretamente dentro da própria classe.| Por exemplo, se uma classe A depende de uma classe B, com a injeção de dependência, a classe A não cria uma instância de B diretamente. Em vez disso, um mecanismo externo (como um framework ou container) fornece uma instância de B para A no momento da execução
 export class PostagemService {
   constructor(
     //  Criamos o construtor, que recebe as injeções de dependência necessárias para o desenvolvimento da classe de serviço
     @InjectRepository(Postagem) //O decorador @InjectRepository(Postagem) indica a classe entidade que será utilizada pela injeção de dependência da classe Repository. No caso de PostagemService, o decorador informa ao Nest que o objeto postagemRepository (injeção de dependência) está associado à entidade Postagem
-    private postagemRepository: Repository<Postagem>, //Definimos o nome do objeto da classe Repository (postagemRepository), que será responsável por executar os métodos da classe Repository relacionados à entidade Postagem
+    private postagemRepository: Repository<Postagem>,
+    private temaService: TemaService, //Definimos o nome do objeto da classe Repository (postagemRepository), que será responsável por executar os métodos da classe Repository relacionados à entidade Postagem
   ) {}
 
   async findAll(): Promise<Postagem[]> {
@@ -20,6 +22,9 @@ export class PostagemService {
     const postagem = await this.postagemRepository.findOne({
       where: {
         id,
+      },
+      relations: {
+        tema: true,
       },
     });
 
@@ -33,15 +38,21 @@ export class PostagemService {
       where: {
         titulo: ILike(`%${titulo}%`),
       },
+      relations: {
+        tema: true,
+      },
     });
   }
 
   async create(postagem: Postagem): Promise<Postagem> {
+    await this.temaService.findById(postagem.tema.id);
     return await this.postagemRepository.save(postagem);
   }
 
   async update(postagem: Postagem): Promise<Postagem> {
     await this.findById(postagem.id);
+
+    await this.temaService.findById(postagem.tema.id);
 
     return await this.postagemRepository.save(postagem);
   }

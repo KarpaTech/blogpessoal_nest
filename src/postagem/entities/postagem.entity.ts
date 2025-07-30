@@ -1,7 +1,9 @@
 import { IsNotEmpty } from 'class-validator'; //Importamos o pacote Validation com os respectivos decoradores, que serão utilizados para implementar as regras de validação na Classe Postagem.
+import { Tema } from 'src/tema/entities/tema.entity';
 import {
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'; //Importamos o pacote TypeORM com os respectivos decoradores, necessários para mapear a Classe Postagem como uma entidade e realizar a interação com o Banco de dados.
@@ -23,4 +25,9 @@ export class Postagem {
 
   @UpdateDateColumn() //O decorador @UpdateDateColumn configura o atributo data como um Timestamp, ou seja, toda vez que um objeto da classe Postagem for criado ou atualizado, o NestJS automaticamente irá preencher esse campo com a data e a hora atuais do Sistema Operacional.
   data: Date;
+
+  @ManyToOne(() => Tema, (tema) => tema.postagem, {
+    onDelete: 'CASCADE',
+  })
+  tema: Tema;
 }
