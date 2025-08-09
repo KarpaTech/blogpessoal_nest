@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Postagem } from './postagem/entities/postagem.entity'; //Importamos a Classe Postagem, que foi definida anteriormente como a Entidade (Model) responsável pela tabela tb_postagens no banco de dados. Essa classe representa a estrutura da tabela e será usada pelo TypeORM para realizar operações de persistência de dados.
 import { PostagemModule } from './postagem/postagem.module'; //  Importamos a Classe PostagemModule, que encapsula a lógica do módulo relacionado à Postagem. Esse módulo define como a Entidade Postagem será usada, além de registrar o Service e o Controller necessários para realizar as operações CRUD (Create, Read, Update, Delete)
-import { Tema } from './tema/entities/tema.entity';
 import { TemaModule } from './tema/tema.module';
 import { AuthModule } from './auth/auth.module';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
+import { Tema } from './tema/entities/tema.entity';
 
 @Module({
   imports: [

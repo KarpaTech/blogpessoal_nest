@@ -1,13 +1,7 @@
 import { IsNotEmpty } from 'class-validator'; //Importamos o pacote Validation com os respectivos decoradores, que serão utilizados para implementar as regras de validação na Classe Postagem.
-import { Tema } from 'src/tema/entities/tema.entity';
-import { Usuario } from 'src/usuario/entities/usuario.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm'; //Importamos o pacote TypeORM com os respectivos decoradores, necessários para mapear a Classe Postagem como uma entidade e realizar a interação com o Banco de dados.
+import { Tema } from '../../tema/entities/tema.entity';
+import { Usuario } from '../../usuario/entities/usuario.entity';
+import {Column,Entity,ManyToOne,PrimaryGeneratedColumn,UpdateDateColumn,} from 'typeorm'; //Importamos o pacote TypeORM com os respectivos decoradores, necessários para mapear a Classe Postagem como uma entidade e realizar a interação com o Banco de dados.
 
 @Entity({ name: 'tb_postagens' }) //O decorador @Entity é utilizado para marcar a classe como uma entidade, ou seja, uma classe que será mapeada para uma tabela no Banco de dados. O parâmetro name define o nome da tabela no Banco de dados (tb_postagens). Se esse parâmetro não for informado, o TypeORM usará o nome da classe (Postagem) para criar a tabela
 //Vale ressaltar que o nome da tabela segue o padrão tb_nome_da_tabela (tb_postagens). O prefixo tb indica que se trata de uma tabela. O nome da tabela é recomendado ser o mesmo da classe, em letras minúsculas, sem espaços em branco, caracteres especiais ou acentos.

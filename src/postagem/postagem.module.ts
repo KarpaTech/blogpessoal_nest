@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'; //Importamos o pacote TypeORM c
 import { Postagem } from './entities/postagem.entity'; // Importamos a Classe Postagem, que foi criada anteriormente. Observe que, para garantir boas práticas de organização e manutenção do código, estamos utilizando o caminho relativo (./entities/postagem.entity.ts) ao invés do caminho absoluto (src/entities/postagem.entity.ts). Usar caminhos relativos ajuda a tornar o código mais modular e independente de estruturas específicas de diretórios, facilitando refatorações e migrações de código sem a necessidade de atualizar diversos caminhos de importação
 import { PostagemService } from './services/postagem.service';
 import { PostagemController } from './controllers/postagem.controller';
-import { TemaModule } from 'src/tema/tema.module';
+import { TemaModule } from '../tema/tema.module';
 
 @Module({
   //O decorador @Module define que esta classe será a principal do Módulo. Nela, registramos todas as dependências necessárias, como as Classes Entidade, Service e Controller, que fazem parte do módulo. Este decorador organiza a estrutura do módulo, tornando as classes do módulo acessíveis ao NestJS
