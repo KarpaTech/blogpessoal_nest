@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
 import { Tema } from './tema/entities/tema.entity';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { Tema } from './tema/entities/tema.entity';
     AuthModule,
     UsuarioModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

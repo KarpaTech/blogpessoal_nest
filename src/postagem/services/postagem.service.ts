@@ -38,7 +38,9 @@ export class PostagemService {
 
         return postagem;
     }
-
+    async findByTitulo(titulo: string) {
+    return this.findAllByTitulo(titulo);
+    }
     async findAllByTitulo(titulo: string): Promise<Postagem[]> {
         return await this.postagemRepository.find({
             where:{

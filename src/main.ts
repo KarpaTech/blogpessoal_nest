@@ -5,6 +5,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  
+
   process.env.TZ = ' -03: 00'; // configura o fuso horário da aplicação. Utilizando o comando process.env, definimos a variável de ambiente TZ (Time Zone) com o valor -03:00
 
   app.useGlobalPipes(new ValidationPipe()); // Ativa a classe ValidationPipe em todas as requisições HTTP. Com isso, utilizando as bibliotecas Class Validator e Class Transformer, é possível definir regras de validação para os atributos das classes entidade (models). Essas regras serão aplicadas em todas as requisições, especialmente nos métodos POST e PUT, verificando os atributos enviados no corpo da requisição para garantir que estejam de acordo com as validações definidas.
@@ -32,3 +34,6 @@ exp (expiration)	      Timestamp de quando o token irá expirar.
 iat (issued at)     	  Timestamp de quando o token foi criado.
 aud (audience)      	  Destinatário do token, representa a aplicação que irá usá-lo.
 */
+
+
+//cookbook passo 09, nao esqueca de registrar o usuario padrao no insomnia para o 
