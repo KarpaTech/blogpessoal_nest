@@ -1,20 +1,33 @@
 import { ValidationPipe } from '@nestjs/common'; // Importa a classe ValidationPipe do NestJS.
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  
+  const config = new DocumentBuilder()
+    .setTitle('Blog Pessoal - Pedro Henrique')
+    .setDescription('Projeto Blog Pessoal')
+    .setContact(
+      'Generation Brasil',
+      'https://github.com/KarpaTech',
+      'karpatech2025@gmail.com',
+    )
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/swagger', app, document);
 
   process.env.TZ = ' -03: 00'; // configura o fuso horário da aplicação. Utilizando o comando process.env, definimos a variável de ambiente TZ (Time Zone) com o valor -03:00
 
   app.useGlobalPipes(new ValidationPipe()); // Ativa a classe ValidationPipe em todas as requisições HTTP. Com isso, utilizando as bibliotecas Class Validator e Class Transformer, é possível definir regras de validação para os atributos das classes entidade (models). Essas regras serão aplicadas em todas as requisições, especialmente nos métodos POST e PUT, verificando os atributos enviados no corpo da requisição para garantir que estejam de acordo com as validações definidas.
 
   app.enableCors({
-    origin: 'https://meusite.com', // Substitua pelo domínio permitido
-    methods: 'GET,POST,PUT,DELETE', // Métodos permitidos
-    allowedHeaders: 'Content-Type, Authorization', // Cabeçalhos permitidos
+    //origin: '', // Substitua pelo domínio permitido
+    //methods: 'GET,POST,PUT,DELETE', // Métodos permitidos
+    //allowedHeaders: 'Content-Type, Authorization', // Cabeçalhos permitidos
   }); // Habilita o Cross-Origin Resource Sharing (CORS) em toda a aplicação, permitindo que o servidor atenda requisições de diferentes origens.
 
   await app.listen(process.env.PORT ?? 4000);
@@ -35,5 +48,4 @@ iat (issued at)     	  Timestamp de quando o token foi criado.
 aud (audience)      	  Destinatário do token, representa a aplicação que irá usá-lo.
 */
 
-
-//cookbook passo 09, nao esqueca de registrar o usuario padrao no insomnia para o 
+//cookbook passo 09, nao esqueca de registrar o usuario padrao no insomnia para o
